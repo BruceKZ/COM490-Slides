@@ -4,22 +4,29 @@
     walkedge/.style={draw=walk,thick,dashed,-Latex},
     prob/.style={font=\scriptsize,align=center,fill=white}]
   \node[stop] (A) at (0,0) {A};
-  \node[stop] (X) at (2.7,0) {X};
+  \node[stop] (X) at (3.5,0) {X};
   \node[stop] (Y) at (5.2,0) {Y};
-  \node[stop] (B) at (7.9,0) {B};
+  \node[stop] (B) at (8.7,0) {B};
 
-  \draw[ride] (A) -- node[prob,above=2mm] {$p_1=P(d_X \le s_X)$} (X);
-  \draw[walkedge] (X) -- node[prob,below=2mm] {deterministic walk\\debits slack} (Y);
-  \draw[ride] (Y) -- node[prob,above=2mm] {$p_2=P(d_B \le T-t_B)$} (B);
+  \draw[ride] (A) -- node[prob,above=3mm] {$p_1=P(d_X \le s_X)$} (X);
+  \draw[walkedge] (X) -- node[prob,below=5mm] {deterministic walk\\debits slack} (Y);
+  \draw[ride] (Y) -- node[prob,above=3mm] {$p_2=P(d_B \le T-t_B)$} (B);
 
   \only<2->{
-    \node[draw=okgreen,fill=softgreen,rounded corners=1mm,align=center,text width=80mm,below=13mm of Y] {
-      \small Route confidence:
-      $P(\mathrm{route\ succeeds}) \approx \prod_{\mathrm{ride\ legs}} p_i$
+    \coordinate (mid) at ($(A)!0.5!(B)$);
+    \node[draw=okgreen, fill=softgreen, rounded corners=1mm,
+          align=center, below=15mm of mid] {
+      \small
+      \begin{tabular}{c}
+        Route confidence: \\[1mm]
+        $P(\mathrm{route\ succeeds}) \approx \displaystyle\prod_{\mathrm{ride\ legs}} p_i$
+      \end{tabular}
     };
   }
   \only<3->{
-    \node[draw=sbbred,fill=softred,rounded corners=1mm,align=center,text width=82mm,above=11mm of Y] {
+  
+    \coordinate (mid) at ($(A)!0.5!(B)$);
+    \node[draw=sbbred,fill=softred,rounded corners=1mm,align=center,text width=82mm,above=13mm of mid] {
       \small Keep only if confidence $\ge Q$ and arrival $\le T$.
     };
   }
