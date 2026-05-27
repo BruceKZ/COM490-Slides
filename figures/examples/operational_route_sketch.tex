@@ -1,14 +1,13 @@
-\begin{tikzpicture}[>=Latex,
-    stop/.style={circle,draw=ink,fill=white,minimum size=7mm,thick},
+\begin{tikzpicture}[>=Latex,scale=1.15,every node/.append style={transform shape},
+    stop/.style={circle,draw=ink,fill=white,minimum size=8mm,thick},
     ride/.style={draw=track,very thick,-{Latex[length=5pt, width=4pt]}},
-    lab/.style={font=\scriptsize,align=center}]
+    lab/.style={font=\footnotesize,align=center}]
   \node[stop] (epfl) at (0,0) {};
-  \node[stop] (flon) at (3.4,0.8) {};
+  \node[stop] (flon) at (3.4,1.0) {};
   \node[stop] (chuv) at (6.8,0) {};
-  \draw[ride] (epfl) -- node[lab,below]{m1 07:47--07:59} (flon);
-  \draw[ride] (flon) -- node[lab,below]{m2 08:03--08:08} (chuv);
-  \node[lab,below=2mm of epfl] {EPFL};
-  \node[lab,above=2mm of flon] {Lausanne-Flon\\\scriptsize 4 min buffer};
-  \node[lab,below=2mm of chuv] {CHUV};
-  \node[draw=muted,rounded corners=1mm,fit=(epfl)(flon)(chuv),inner sep=6mm,label={[font=\scriptsize,text=muted]below:route confidence 96.6\%, no walking leg}] {};
+  \draw[ride] (epfl) -- node[lab,above,sloped]{m1 \scriptsize 07:47--07:59} (flon);
+  \draw[ride] (flon) -- node[lab,above,sloped]{m2 \scriptsize 08:03--08:08} (chuv);
+  \node[lab,below=2mm of epfl] {\textbf{EPFL}};
+  \node[lab,above=2mm of flon] {\textbf{Lausanne-Flon}\\\scriptsize\color{muted}4 min transfer buffer};
+  \node[lab,below=2mm of chuv] {\textbf{CHUV}};
 \end{tikzpicture}

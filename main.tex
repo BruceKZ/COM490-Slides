@@ -286,7 +286,7 @@
 % ---------------------------------------------------------------------------
 \begin{frame}{Operational Example}
   \begin{columns}[T,onlytextwidth]
-    \column{0.45\textwidth}
+    \column{0.42\textwidth}
       \begin{block}{Query}
         \begin{tabular}{@{}ll@{}}
           Origin & EPFL (8501214)\\
@@ -304,20 +304,26 @@
           \toprule
           dep. & arr. & confidence\\
           \midrule
-          07:47 & 08:08 & 96.6\%\\
+          \textbf{07:47} & \textbf{08:08} & \textbf{96.6\%}\\
           07:42 & 08:04 & 95.0\%\\
           \bottomrule
         \end{tabular}
       \end{block}
 
-    \column{0.51\textwidth}
-      \centering
-      \resizebox{\linewidth}{!}{%
-      \input{figures/examples/operational_route_sketch.tex}
-      }
-
+    \column{0.55\textwidth}
       \vspace{2mm}
-      \smallcap{No walking leg; transfer slack at Lausanne-Flon is 4 min / 3 min.}
+      \centering
+      \input{figures/examples/operational_route_sketch.tex}
+
+      \vspace{4mm}
+      \begin{tikzpicture}
+        \node[draw=muted!40,rounded corners=2pt,inner sep=6pt,
+              fill=muted!5,text=ink,font=\footnotesize,align=left,
+              text width=0.85\linewidth]
+          {\textbf{Selected route} --- confidence \textbf{96.6\%}, no walking leg.\\
+           Transfer slack at Lausanne-Flon: 4 min (m1 arr 07:59 $\to$ m2 dep 08:03),\\
+           then 3 min at CHUV before the 09:00 deadline.};
+      \end{tikzpicture}
   \end{columns}
 \end{frame}
 
