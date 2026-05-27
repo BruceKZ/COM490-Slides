@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+  \begin{axis}[
+    width=\linewidth,height=48mm,
+    xmin=0,xmax=12,ymin=0,ymax=1.02,
+    xlabel={available slack (min)},
+    ylabel={$P(\mathrm{delay}\le\mathrm{slack})$},
+    ylabel style={yshift=-1mm},
+    grid=both,
+    grid style={draw=muted!15},
+    tick label style={font=\scriptsize},
+    label style={font=\scriptsize},
+    ytick={0,0.5,0.8,0.9,0.95,1},
+    xtick={0,3,6,9,12}]
+    \addplot[track,very thick,mark=*] coordinates {(0,0.42) (1.5,0.50) (4,0.80) (6.5,0.90) (9,0.95) (12,0.99)};
+    \addplot[sbbred,dashed,thick] coordinates {(0,0.9) (12,0.9)};
+    \node[font=\scriptsize,anchor=west,text=sbbred] at (axis cs:7.1,0.88) {$Q=90\%$};
+  \end{axis}
+\end{tikzpicture}

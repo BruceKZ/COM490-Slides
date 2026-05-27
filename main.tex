@@ -85,21 +85,7 @@
       \end{block}
 
     \column{0.49\textwidth}
-      \begin{tikzpicture}[node distance=8mm,>=Latex,
-          stop/.style={circle,draw=ink,fill=white,minimum size=8mm,thick},
-          route/.style={draw=track,very thick,-Latex},
-          risky/.style={draw=sbbred,very thick,-Latex,dashed},
-          lab/.style={font=\scriptsize,align=center}]
-        \node[stop] (A) {A};
-        \node[stop,right=22mm of A] (X) {X};
-        \node[stop,right=22mm of X] (B) {B};
-        \draw[route] (A) -- node[lab,above]{fast\\low slack} (X);
-        \draw[risky] (X) -- node[lab,above]{risky\\transfer} (B);
-        \draw[route,bend right=32] (A) to node[lab,below]{slower\\robust} (B);
-        \node[lab,below=20mm of X,text width=65mm] {
-          Choose the route that is fastest \emph{among routes reliable enough}.
-        };
-      \end{tikzpicture}
+      \input{figures/concept/question_routes.tex}
   \end{columns}
 
   \begin{alertblock}{Main assumptions}
@@ -112,7 +98,7 @@
 \begin{frame}{System Overview}
   \centering
 
-    \resizebox{\textwidth}{!}{\input{fig_system_overview.tex}}
+    \resizebox{\textwidth}{!}{\input{figures/system/overview.tex}}
 
   \vspace{2mm}
   \only<1>{\smallcap{Build a planner from timetable, history, and geography.}}
@@ -124,26 +110,7 @@
 \begin{frame}{Data Structure: A Time-Dependent Transit Graph}
   \begin{columns}[T,onlytextwidth]
     \column{0.54\textwidth}
-    \begin{tikzpicture}[x=1cm,y=0.78cm,>=Latex,
-        stop/.style={circle,draw=ink,fill=white,minimum size=6mm,thick},
-        ride/.style={draw=track,very thick,-Latex},
-        walkedge/.style={draw=walk,thick,dashed,-Latex},
-        time/.style={font=\scriptsize,text=muted},
-        edgelabel/.style={font=\scriptsize,fill=white,inner sep=1pt}]
-      \foreach \y/\name in {3/A,2/X,1/Y,0/B}{
-        \node[stop] (\name) at (0,\y) {\name};
-      }
-      \foreach \x/\t in {1/08:10,2.7/08:20,4.4/08:30,6.1/08:40}{
-        \node[time] at (\x,-0.65) {\t};
-        \draw[muted!25] (\x,-0.3) -- (\x,3.35);
-      }
-      \draw[ride] (0.2,3) -- node[edgelabel,above,sloped,pos=0.48]{trip 1} (2.7,2);
-      \draw[ride] (3.0,1.95) -- node[edgelabel,above,sloped,pos=0.62]{trip 2} (6.1,0);
-      \draw[ride] (0.2,3) to[out=-35,in=170]
-        node[edgelabel,below,sloped,pos=0.35]{direct} (6.0,0.15);
-      \draw[walkedge] (2.75,1.75) -- node[edgelabel,right,pos=0.55]{walk} (3.35,1.0);
-      \node[time] at (3.05,3.75) {time increases $\rightarrow$};
-    \end{tikzpicture}
+    \input{figures/model/time_dependent_graph.tex}
 
     \column{0.42\textwidth}
     \begin{itemize}
@@ -188,24 +155,7 @@
 
     \column{0.48\textwidth}
       \centering
-      \begin{tikzpicture}
-        \begin{axis}[
-          width=\linewidth,height=48mm,
-          xmin=0,xmax=12,ymin=0,ymax=1.02,
-          xlabel={available slack (min)},
-          ylabel={$P(\mathrm{delay}\le\mathrm{slack})$},
-          ylabel style={yshift=-1mm},
-          grid=both,
-          grid style={draw=muted!15},
-          tick label style={font=\scriptsize},
-          label style={font=\scriptsize},
-          ytick={0,0.5,0.8,0.9,0.95,1},
-          xtick={0,3,6,9,12}]
-          \addplot[track,very thick,mark=*] coordinates {(0,0.42) (1.5,0.50) (4,0.80) (6.5,0.90) (9,0.95) (12,0.99)};
-          \addplot[sbbred,dashed,thick] coordinates {(0,0.9) (12,0.9)};
-          \node[font=\scriptsize,anchor=west,text=sbbred] at (axis cs:7.1,0.88) {$Q=90\%$};
-        \end{axis}
-      \end{tikzpicture}
+      \input{figures/model/delay_slack_profile.tex}
 
       \vspace{-1mm}
       {\scriptsize\textcolor{muted}{QUANTILE PROFILES SCORE ANY SLACK VALUE.}}
@@ -215,32 +165,7 @@
 % ---------------------------------------------------------------------------
 \begin{frame}{How Confidence Enters a Route}
   \centering
-  \begin{tikzpicture}[>=Latex,
-      stop/.style={circle,draw=ink,fill=white,minimum size=8mm,thick},
-      ride/.style={draw=track,very thick,-Latex},
-      walkedge/.style={draw=walk,thick,dashed,-Latex},
-      prob/.style={font=\scriptsize,align=center,fill=white}]
-    \node[stop] (A) at (0,0) {A};
-    \node[stop] (X) at (2.7,0) {X};
-    \node[stop] (Y) at (5.2,0) {Y};
-    \node[stop] (B) at (7.9,0) {B};
-
-    \draw[ride] (A) -- node[prob,above=2mm] {$p_1=P(d_X \le s_X)$} (X);
-    \draw[walkedge] (X) -- node[prob,below=2mm] {deterministic walk\\debits slack} (Y);
-    \draw[ride] (Y) -- node[prob,above=2mm] {$p_2=P(d_B \le T-t_B)$} (B);
-
-    \only<2->{
-      \node[draw=okgreen,fill=softgreen,rounded corners=1mm,align=center,text width=80mm,below=13mm of Y] {
-        \small Route confidence:
-        $P(\mathrm{route\ succeeds}) \approx \prod_{\mathrm{ride\ legs}} p_i$
-      };
-    }
-    \only<3->{
-      \node[draw=sbbred,fill=softred,rounded corners=1mm,align=center,text width=82mm,above=11mm of Y] {
-        \small Keep only if confidence $\ge Q$ and arrival $\le T$.
-      };
-    }
-  \end{tikzpicture}
+  \input{figures/model/route_confidence.tex}
 
   \vspace{1mm}
   \only<1>{\smallcap{Each transfer/final deadline creates a slack value.}}
@@ -267,22 +192,7 @@
       \end{alertblock}
 
     \column{0.46\textwidth}
-      \begin{tikzpicture}[>=Latex,node distance=8mm,
-          box/.style={draw=ink,rounded corners=1mm,align=center,minimum width=39mm,minimum height=8mm,fill=white,font=\scriptsize},
-          arr/.style={-Latex,very thick,draw=muted}]
-        \node[box,fill=softblue] (q) {query $(A,B,T,Q,\mathrm{day})$};
-        \node[box,fill=softorange,below=of q] (sweep) {departure sweep\\$T,T-5,\dots,T-W$};
-        \node[box,fill=softgreen,below=of sweep] (rap) {McRAPTOR\\Pareto labels};
-        \node[box,fill=softred,below=of rap] (score) {confidence scoring\\filter $\ge Q$};
-        \node[box,fill=white,below=of score] (rank) {deduplicate and sort};
-        \draw[arr] (q) -- (sweep);
-        \draw[arr] (sweep) -- (rap);
-        \draw[arr] (rap) -- (score);
-        \draw[arr] (score) -- (rank);
-
-        \only<2->{\node[draw=sbbred,rounded corners=1mm,fit=(sweep),inner sep=1.5mm] {};}
-        \only<3->{\node[draw=okgreen,rounded corners=1mm,fit=(rap),inner sep=1.5mm] {};}
-      \end{tikzpicture}
+      \input{figures/routing/algorithm_pipeline.tex}
   \end{columns}
 \end{frame}
 
@@ -309,33 +219,7 @@
 
     \column{0.50\textwidth}
       \centering
-      \begin{tikzpicture}
-        \begin{axis}[
-          width=\linewidth,height=52mm,
-          xmin=0.45,xmax=1.0,ymin=0.45,ymax=1.0,
-          xlabel={predicted confidence},
-          ylabel={observed success rate},
-          grid=both,
-          grid style={draw=muted!15},
-          tick label style={font=\scriptsize},
-          label style={font=\scriptsize},
-          legend style={
-            font=\scriptsize,
-            at={(0.5,1.18)},
-            anchor=south,
-            legend columns=3,
-            draw=none,
-            fill=none,
-            /tikz/every even column/.append style={column sep=3mm}
-          }]
-          \addplot[muted,dashed,thick] coordinates {(0.45,0.45) (1,1)};
-          \addlegendentry{perfect}
-          \addplot[track,very thick,mark=*] coordinates {(0.50,0.51) (0.80,0.81) (0.90,0.88) (0.95,0.95) (0.99,0.99)};
-          \addlegendentry{model}
-          \addplot[sbbred,thick,mark=square*] coordinates {(0.50,0.50) (0.80,0.79) (0.90,0.90) (0.95,0.94) (0.99,0.98)};
-          \addlegendentry{baseline}
-        \end{axis}
-      \end{tikzpicture}
+      \input{figures/validation/calibration_plot.tex}
 
       \vspace{-2mm}
       \ph{Insert final calibration values from cluster run.}
@@ -347,24 +231,7 @@
   \begin{columns}[T,onlytextwidth]
     \column{0.53\textwidth}
       \centering
-      \begin{tikzpicture}
-        \begin{axis}[
-          ybar,
-          width=\linewidth,height=52mm,
-          ymin=0.78,ymax=1.0,
-          xlabel={hour of day},
-          ylabel={observed fraction below predicted p90},
-          xtick={4,5,6,7,8,9,10},
-          ytick={0.8,0.85,0.9,0.95,1.0},
-          grid=major,
-          grid style={draw=muted!15},
-          tick label style={font=\scriptsize},
-          label style={font=\scriptsize},
-          bar width=7pt]
-          \addplot[fill=track!60,draw=track] coordinates {(4,0.821) (5,0.91) (6,0.895) (7,0.853) (8,0.887) (9,0.903) (10,0.915)};
-          \addplot[sbbred,dashed,very thick] coordinates {(3.5,0.9) (10.5,0.9)};
-        \end{axis}
-      \end{tikzpicture}
+      \input{figures/validation/morning_peak_risk.tex}
 
       \ph{Replace with final hourly p90 chart if rerun.}
 
@@ -413,24 +280,7 @@
     \column{0.51\textwidth}
       \centering
       \resizebox{\linewidth}{!}{%
-      \begin{tikzpicture}[>=Latex,
-          stop/.style={circle,draw=ink,fill=white,minimum size=7mm,thick},
-          ride/.style={draw=track,very thick,-Latex},
-          walkedge/.style={draw=walk,thick,dashed,-Latex},
-          lab/.style={font=\scriptsize,align=center}]
-        \node[stop] (epfl) at (0,0) {};
-        \node[stop] (renens) at (2.4,0.8) {};
-        \node[stop] (laus) at (4.8,0.1) {};
-        \node[stop] (chuv) at (7.0,1.1) {};
-        \draw[ride] (epfl) -- node[lab,below]{ride} (renens);
-        \draw[walkedge] (renens) -- node[lab,above]{transfer} (laus);
-        \draw[ride] (laus) -- node[lab,below]{ride} (chuv);
-        \node[lab,below=2mm of epfl] {EPFL};
-        \node[lab,above=2mm of renens] {\ph{transfer stop}};
-        \node[lab,below=2mm of laus] {\ph{transfer stop}};
-        \node[lab,above=2mm of chuv] {CHUV};
-        \node[draw=muted,rounded corners=1mm,fit=(epfl)(renens)(laus)(chuv),inner sep=6mm,label={[font=\scriptsize,text=muted]below:replace by Plotly route map screenshot if available}] {};
-      \end{tikzpicture}
+      \input{figures/examples/operational_route_sketch.tex}
       }
 
       \vspace{2mm}

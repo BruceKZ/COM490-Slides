@@ -1,0 +1,16 @@
+\begin{tikzpicture}[>=Latex,node distance=8mm,
+    box/.style={draw=ink,rounded corners=1mm,align=center,minimum width=39mm,minimum height=8mm,fill=white,font=\scriptsize},
+    arr/.style={-Latex,very thick,draw=muted}]
+  \node[box,fill=softblue] (q) {query $(A,B,T,Q,\mathrm{day})$};
+  \node[box,fill=softorange,below=of q] (sweep) {departure sweep\\$T,T-5,\dots,T-W$};
+  \node[box,fill=softgreen,below=of sweep] (rap) {McRAPTOR\\Pareto labels};
+  \node[box,fill=softred,below=of rap] (score) {confidence scoring\\filter $\ge Q$};
+  \node[box,fill=white,below=of score] (rank) {deduplicate and sort};
+  \draw[arr] (q) -- (sweep);
+  \draw[arr] (sweep) -- (rap);
+  \draw[arr] (rap) -- (score);
+  \draw[arr] (score) -- (rank);
+
+  \only<2->{\node[draw=sbbred,rounded corners=1mm,fit=(sweep),inner sep=1.5mm] {};}
+  \only<3->{\node[draw=okgreen,rounded corners=1mm,fit=(rap),inner sep=1.5mm] {};}
+\end{tikzpicture}

@@ -1,0 +1,18 @@
+\begin{tikzpicture}[>=Latex,
+    stop/.style={circle,draw=ink,fill=white,minimum size=7mm,thick},
+    ride/.style={draw=track,very thick,-Latex},
+    walkedge/.style={draw=walk,thick,dashed,-Latex},
+    lab/.style={font=\scriptsize,align=center}]
+  \node[stop] (epfl) at (0,0) {};
+  \node[stop] (renens) at (2.4,0.8) {};
+  \node[stop] (laus) at (4.8,0.1) {};
+  \node[stop] (chuv) at (7.0,1.1) {};
+  \draw[ride] (epfl) -- node[lab,below]{ride} (renens);
+  \draw[walkedge] (renens) -- node[lab,above]{transfer} (laus);
+  \draw[ride] (laus) -- node[lab,below]{ride} (chuv);
+  \node[lab,below=2mm of epfl] {EPFL};
+  \node[lab,above=2mm of renens] {\ph{transfer stop}};
+  \node[lab,below=2mm of laus] {\ph{transfer stop}};
+  \node[lab,above=2mm of chuv] {CHUV};
+  \node[draw=muted,rounded corners=1mm,fit=(epfl)(renens)(laus)(chuv),inner sep=6mm,label={[font=\scriptsize,text=muted]below:replace by Plotly route map screenshot if available}] {};
+\end{tikzpicture}
