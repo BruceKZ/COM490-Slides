@@ -181,7 +181,7 @@
 % ---------------------------------------------------------------------------
 \begin{frame}{Routing Algorithm}
   \begin{columns}[T,onlytextwidth]
-    \column{0.6\textwidth}
+    \column{0.66\textwidth}
       \begin{block}{Candidate generation}
         \begin{enumerate}
           \item Sweep departure probes backward from $T$.
@@ -196,7 +196,7 @@
         Return routes with confidence $\ge Q$, sorted from latest departure to earliest departure.
       \end{alertblock}
 
-    \column{0.35\textwidth}
+    \column{0.29\textwidth}
       \input{figures/routing/algorithm_pipeline.tex}
   \end{columns}
 \end{frame}
@@ -262,8 +262,8 @@
     \column{0.45\textwidth}
       \begin{block}{Query}
         \begin{tabular}{@{}ll@{}}
-          Origin & EPFL \textcolor{warn}{(TBD stop ID)}\\
-          Destination & CHUV \textcolor{warn}{(TBD stop ID)}\\
+          Origin & EPFL (8501214)\\
+          Destination & CHUV (8592017)\\
           Day & \textcolor{warn}{TBD}\\
           Arrival deadline & 09:00\\
           Confidence & 90\%\\
@@ -271,8 +271,9 @@
         \end{tabular}
       \end{block}
 
-      \begin{block}{Result to show}
-        \begin{tabular}{@{}lll@{}}
+      \begin{block}{Result}
+        \centering
+        \begin{tabular}{ccc}
           \toprule
           dep. & arr. & confidence\\
           \midrule
