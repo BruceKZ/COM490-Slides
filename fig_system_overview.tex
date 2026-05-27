@@ -1,0 +1,60 @@
+
+\begin{tikzpicture}[
+    box/.style={draw, rounded corners=1.5mm, thick, align=center,
+                text width=26mm, minimum height=18mm,
+                inner xsep=1mm, inner ysep=1mm, fill=white},
+    data/.style={box, fill=softblue},
+    model/.style={box, fill=softgreen},
+    alg/.style={box, fill=softorange},
+    outputbox/.style={box, fill=softred},
+    arrow/.style={-{Latex[length=4pt, width=3pt]}, thick, draw=muted}
+    ]
+
+  \def\xA{0}
+  \def\xB{3.4}
+  \def\xC{6.8}
+  \def\xD{10}
+
+  %% Col A
+  \node[data] (geo)  at (\xA,  2)
+    {Geo regions\\\scriptsize configurable\\[-1pt]\scriptsize UUID list};
+  \node[data] (gtfs) at (\xA,  0)
+    {GTFS timetable\\\scriptsize stops, trips,\\[-1pt]\scriptsize calendar};
+  \node[data] (ist)  at (\xA, -2)
+    {Istdaten actuals\\\scriptsize scheduled\\[-1pt]\scriptsize vs.\ real};
+
+  %% Col B
+  \node[model] (prep)  at (\xB,  1)
+    {Regional tables\\\scriptsize stops, footpaths,\\[-1pt]\scriptsize stop times};
+  \node[model] (delay) at (\xB, -1)
+    {Delay profiles\\\scriptsize stop $\times$ weekday\\[-1pt]\scriptsize $\times$ hour};
+
+  %% Col C
+  \node[alg] (raptor) at (\xC, 0)
+    {McRAPTOR search\\\scriptsize Pareto: arrival,\\[-1pt]\scriptsize walking, transfers};
+
+  %% Col D
+  \node[outputbox] (score) at (\xD, 0)
+    {Robust routes\\\scriptsize conf.\ $\ge Q$,\\[-1pt]\scriptsize latest dep.\ first};
+
+%% Arrows A → B
+\draw[arrow] (geo.east) -- (prep.west);
+\draw[arrow] (gtfs.east) -- (prep.west);
+\draw[arrow] (ist.east) -- (delay.west);
+
+  %% Arrows B → C
+  \draw[arrow] (prep.east) -- (raptor.west);
+  \draw[arrow] (delay.east) -- (raptor.west);
+
+  %% Arrow C → D
+  \draw[arrow] (raptor.east) -- (score.west);
+
+  %% Group boxes
+  \only<2>{\node[draw=sbbred, thick, rounded corners=1.5mm,
+      fit=(prep)(delay), inner sep=2.7mm,
+      label={[text=sbbred, font=\small]above:one-time preparation}] {};}
+  \only<3->{\node[draw=okgreen, thick, rounded corners=1.5mm,
+      fit=(raptor)(score), inner sep=2.7mm,
+      label={[text=okgreen, font=\small]above:per-query routing}] {};}
+
+\end{tikzpicture}
