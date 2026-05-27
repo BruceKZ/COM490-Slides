@@ -249,7 +249,9 @@
 
 \begin{frame}{Route-Based Validation Results}
   \begin{columns}[T,onlytextwidth]
+  
     \column{0.65\textwidth}
+    \vspace{3mm}
       \begin{itemize}
         \item Reserve 30 days of data to validate the planned routes, delay model trained without these days.
         \item Travel Demand: random pairs of origin-destination stops, random day of week, random arrival deadline from 7:00 to 22:00 with 30-minute intervals.
@@ -287,6 +289,7 @@
 \begin{frame}{Operational Example}
   \begin{columns}[T,onlytextwidth]
     \column{0.42\textwidth}
+        \vspace{-3mm}
       \begin{block}{Query}
         \begin{tabular}{@{}ll@{}}
           Origin & EPFL (8501214)\\
@@ -299,6 +302,7 @@
       \end{block}
 
       \begin{block}{Result}
+      \vspace{2mm}
         \centering
         \begin{tabular}{ccc}
           \toprule
@@ -311,17 +315,17 @@
       \end{block}
 
     \column{0.55\textwidth}
-      \vspace{2mm}
+    
       \centering
-      \input{figures/examples/operational_route_sketch.tex}
+      \resizebox{\textwidth}{!}{\input{figures/examples/operational_route_sketch.tex}}
 
-      \vspace{4mm}
+      \vspace{6mm}
       \begin{tikzpicture}
         \node[draw=muted!40,rounded corners=2pt,inner sep=6pt,
               fill=muted!5,text=ink,font=\footnotesize,align=left,
-              text width=0.85\linewidth]
-          {\textbf{Selected route} --- confidence \textbf{96.6\%}, no walking leg.\\
-           Transfer slack at Lausanne-Flon: 4 min (m1 arr 07:59 $\to$ m2 dep 08:03),\\
+              text width=0.9\linewidth]
+          {\textbf{Selected route} --- confidence \textbf{96.6\%}, no walking.\\
+           Transfer slack at Lausanne-Flon: 4 min \\(m1 arr 07:59 $\to$ m2 dep 08:03)\\
            then 3 min at CHUV before the 09:00 deadline.};
       \end{tikzpicture}
   \end{columns}
