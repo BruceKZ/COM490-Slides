@@ -1,6 +1,6 @@
 \begin{tikzpicture}[>=Latex,node distance=6mm,
     box/.style={draw=ink,rounded corners=1mm,align=center,minimum width=39mm,minimum height=8mm,fill=white,font=\scriptsize},
-    arr/.style={-{Latex[length=4pt, width=3pt]},thick,draw=muted}]
+    arr/.style={-{Latex[length=5pt, width=4pt]},thick,draw=muted}]
   \node[box,fill=softblue] (q) {query $(A,B,T,Q,\mathrm{day})$};
   \node[box,fill=softorange,below=of q] (sweep) {departure sweep\\$T,T-5,\dots,T-W$};
   \node[box,fill=softgreen,below=of sweep] (rap) {McRAPTOR\\Pareto labels};
