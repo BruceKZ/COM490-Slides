@@ -1,7 +1,7 @@
 \begin{tikzpicture}[x=1cm,y=0.78cm,>=Latex,
     stop/.style={circle,draw=ink,fill=white,minimum size=6mm,thick},
-    ride/.style={draw=track,very thick,-Latex},
-    walkedge/.style={draw=walk,thick,dashed,-Latex},
+    ride/.style={draw=track,very thick,-{Latex[length=4pt, width=3pt]}},
+    walkedge/.style={draw=walk,thick,dashed,-{Latex[length=4pt, width=3pt]}},
     time/.style={font=\scriptsize,text=muted},
     edgelabel/.style={font=\scriptsize,fill=white,inner sep=1pt}]
   \foreach \y/\name in {3/A,2/X,1/Y,0/B}{
@@ -13,8 +13,7 @@
   }
   \draw[ride] (0.2,3) -- node[edgelabel,above,sloped,pos=0.48]{trip 1} (2.7,2);
   \draw[ride] (3.0,1.95) -- node[edgelabel,above,sloped,pos=0.62]{trip 2} (6.1,0);
-  \draw[ride] (0.2,3) to[out=-35,in=170]
-    node[edgelabel,below,sloped,pos=0.35]{direct} (6.0,0.15);
+  \draw[ride] (0.2,3) -- node[edgelabel,below,sloped,pos=0.35]{direct} (6.0,0.15);
   \draw[walkedge] (2.75,1.75) -- node[edgelabel,right,pos=0.55]{walk} (3.35,1.0);
   \node[time] at (3.05,3.75) {time increases $\rightarrow$};
 \end{tikzpicture}

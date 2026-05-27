@@ -1,14 +1,14 @@
 \begin{tikzpicture}[node distance=8mm,>=Latex,
     stop/.style={circle,draw=ink,fill=white,minimum size=8mm,thick},
-    route/.style={draw=track,very thick,-Latex},
-    risky/.style={draw=sbbred,very thick,-Latex,dashed},
+    route/.style={draw=track,very thick,-{Latex[length=4pt, width=3pt]}},
+    risky/.style={draw=sbbred,very thick,-{Latex[length=4pt, width=3pt]},dashed},
     lab/.style={font=\scriptsize,align=center}]
   \node[stop] (A) {A};
   \node[stop,right=22mm of A] (X) {X};
   \node[stop,right=22mm of X] (B) {B};
   \draw[route] (A) -- node[lab,above]{fast\\low slack} (X);
   \draw[risky] (X) -- node[lab,above]{risky\\transfer} (B);
-  \draw[route,bend right=32] (A) to node[lab,below]{slower\\robust} (B);
+  \draw[route] ($(A.south)+(0,-3mm)$) -- node[lab,below]{slower\\robust} ($(B.south)+(0,-3mm)$);
   \node[lab,below=20mm of X,text width=65mm] {
     Choose the route that is fastest \emph{among routes reliable enough}.
   };
