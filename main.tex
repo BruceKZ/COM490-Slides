@@ -1,7 +1,16 @@
 \documentclass[aspectratio=169,11pt]{beamer}
 
-\usetheme{metropolis}
-\usecolortheme{default}
+% \usetheme{metropolis}
+% \usecolortheme{default}
+
+\usetheme{Boadilla}
+\usecolortheme{orchid}
+% \usecolortheme{dove}
+% \usecolortheme{beaver}
+% \usecolortheme{whale}
+
+
+
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}{%
   \hfill\usebeamerfont{page number in head/foot}\insertframenumber\hspace{3mm}\vspace{2mm}
@@ -176,7 +185,7 @@
 % ---------------------------------------------------------------------------
 \begin{frame}{Routing Algorithm}
   \begin{columns}[T,onlytextwidth]
-    \column{0.50\textwidth}
+    \column{0.6\textwidth}
       \begin{block}{Candidate generation}
         \begin{enumerate}
           \item Sweep departure probes backward from $T$.
@@ -191,7 +200,7 @@
         Return routes with confidence $\ge Q$, sorted from latest departure to earliest departure.
       \end{alertblock}
 
-    \column{0.46\textwidth}
+    \column{0.35\textwidth}
       \input{figures/routing/algorithm_pipeline.tex}
   \end{columns}
 \end{frame}
