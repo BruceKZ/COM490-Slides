@@ -247,6 +247,44 @@
 \end{frame}
 
 % ---------------------------------------------------------------------------
+
+\begin{frame}{Route-Based Validation Results}
+  \begin{columns}[T,onlytextwidth]
+    \column{0.65\textwidth}
+      \begin{itemize}
+        \item Reserve 30 days of data to validate the planned routes, delay model trained without these days.
+        \item Travel Demand: random pairs of origin-destination stops, random day of week, random arrival deadline from 7:00 to 22:00 with 30-minute intervals.
+        \item Match with istdaten records by stop ID and scheduled arrival time
+        \item Pure-walking routes or those with unmatched records are excluded before validation.
+      \end{itemize}
+
+    \column{0.35\textwidth}
+      \centering
+      \begin{tabular}{lr}
+        \multicolumn{2}{l}{\bfseries Validation summary}\\[1mm]
+        \toprule
+        Confidence & 90.0\%\\
+        Routes & 50\\
+        Validation & 195\\
+        Successful & 162 (83.1\%)\\
+        \bottomrule
+      \end{tabular}
+
+      \vspace{3mm}
+      \begin{tabular}{lrr}
+        \multicolumn{3}{l}{\bfseries Per-Route Success}\\[1mm]
+        \toprule
+        rate & routes & share\\
+        \midrule
+        100\% & 35 & 70\%\\
+        75\% & 6 & 12\%\\
+        $\leq$50\% & 9 & 18\%\\
+        \bottomrule
+      \end{tabular}
+  \end{columns}
+\end{frame}
+
+% ---------------------------------------------------------------------------
 \begin{frame}{Operational Example}
   \begin{columns}[T,onlytextwidth]
     \column{0.45\textwidth}
@@ -254,7 +292,7 @@
         \begin{tabular}{@{}ll@{}}
           Origin & EPFL (8501214)\\
           Destination & CHUV (8592017)\\
-          Day & \textcolor{warn}{TBD}\\
+          Day & Monday\\
           Arrival deadline & 09:00\\
           Confidence & 90\%\\
           Walking budget & 500 m
@@ -267,8 +305,8 @@
           \toprule
           dep. & arr. & confidence\\
           \midrule
-          \textcolor{warn}{08:xx} & \textcolor{warn}{08:xx} & \textcolor{warn}{9x\%}\\
-          \textcolor{warn}{08:xx} & \textcolor{warn}{08:xx} & \textcolor{warn}{9x\%}\\
+          07:47 & 08:08 & 96.6\%\\
+          07:42 & 08:04 & 95.0\%\\
           \bottomrule
         \end{tabular}
       \end{block}
@@ -280,7 +318,7 @@
       }
 
       \vspace{2mm}
-      \smallcap{Optional demo: 15--20 seconds of notebook widget or Plotly map.}
+      \smallcap{No walking leg; transfer slack at Lausanne-Flon is 4 min / 3 min.}
   \end{columns}
 \end{frame}
 
