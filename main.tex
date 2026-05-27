@@ -113,23 +113,13 @@
 
 % ---------------------------------------------------------------------------
 \begin{frame}{Data Structure: A Time-Dependent Transit Graph}
-  \begin{columns}[T,onlytextwidth]
-    \column{0.54\textwidth}
-    \input{figures/model/time_dependent_graph.tex}
+  \centering
+  \resizebox{0.95\textwidth}{!}{\input{figures/model/time_dependent_graph.tex}}
 
-    \column{0.42\textwidth}
-    \begin{itemize}
-      \item Stops are normalized to station-level IDs.
-      \item Trips become ordered stop-time sequences.
-      \item Walking edges are generated within the configured radius.
-      \item Service availability is filtered by weekday calendar flags.
-    \end{itemize}
-
-    \vspace{2mm}
-    \begin{block}{Implementation detail}
-      \texttt{prepare(regions=[...])} rebuilds regional \texttt{stops}, \texttt{stop\_to\_stop}, and \texttt{stop\_times}.
-    \end{block}
-  \end{columns}
+  \vspace{-5mm}
+  \begin{block}{Implementation detail}
+    \small\texttt{prepare(regions=[...])} rebuilds regional \texttt{stops}, \texttt{stop\_to\_stop}, and \texttt{stop\_times}.
+  \end{block}
 \end{frame}
 
 % ---------------------------------------------------------------------------

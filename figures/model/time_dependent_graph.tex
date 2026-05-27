@@ -1,20 +1,59 @@
-\begin{tikzpicture}[x=1cm,y=0.78cm,>=Latex,
-    stop/.style={circle,draw=ink,fill=white,minimum size=6mm,thick},
-    ride/.style={draw=track,very thick,-{Latex[length=5pt, width=4pt]}},
-    walkedge/.style={draw=walk,thick,dashed,-{Latex[length=5pt, width=4pt]}},
-    time/.style={font=\scriptsize,text=muted},
-    edgelabel/.style={font=\scriptsize,inner sep=1pt}]
+\begin{tikzpicture}[x=1cm,y=0.85cm,>=Latex,
+    stop/.style={circle,draw=ink,fill=white,minimum size=7mm,thick,font=\small},
+    event/.style={circle,draw=track,fill=track,inner sep=1.4pt},
+    ride/.style={draw=track,very thick,-{Latex[length=4.5pt, width=3.5pt]}},
+    walkedge/.style={draw=walk,thick,dashed,-{Latex[length=4.5pt, width=3.5pt]}},
+    timelabel/.style={font=\scriptsize,text=muted},
+    annot/.style={font=\scriptsize,align=left,inner sep=4pt,rounded corners=2pt,line width=0.4pt},
+    leader/.style={thin,->,>=Latex,shorten >=1pt}]
+  % station rows
   \foreach \y/\name in {3/A,2/X,1/Y,0/B}{
     \node[stop] (\name) at (0,\y) {\name};
+    \draw[muted!22] (0.45,\y) -- (6.6,\y);
   }
-  \foreach \x/\t in {1/08:10,2.7/08:20,4.4/08:30,6.1/08:40}{
-    \node[time] at (\x,-0.65) {\t};
-    \draw[muted!25] (\x,-0.3) -- (\x,3.35);
+  % time grid
+  \foreach \x/\t in {1.4/08:10,2.9/08:20,4.4/08:30,5.9/08:40}{
+    \node[timelabel] at (\x,-0.85) {\t};
+    \draw[muted!18] (\x,-0.45) -- (\x,3.55);
   }
-  \draw[ride] (0.3,3) -- node[edgelabel,above,sloped,pos=0.5]{trip 1} (2.7,2);
-  \draw[walkedge] (2.7,2) -- node[edgelabel,right,pos=0.55]{walk} (3.1,1);
-  \draw[ride] (3.1,1) -- node[edgelabel,above,sloped,pos=0.55]{trip 2} (6.1,0);
-  \draw[ride] (0.3,3) to[out=-30,in=172]
-    node[edgelabel,below,sloped,pos=0.4]{direct} (6.0,0.15);
-  \node[time] at (3.05,3.75) {time increases $\rightarrow$};
+  % --- event nodes (one per stop-time entry from GTFS) ---
+  \node[event] (aA)  at (1.4,3) {};
+  \node[event] (aX)  at (2.9,2) {};
+  \node[event] (aA2) at (4.4,3) {};
+  \node[event] (aX2) at (5.9,2) {};
+  \node[event] (bY)  at (3.4,1) {};
+  \node[event] (bB)  at (5.9,0) {};
+  \node[event] (bY0) at (1.4,1) {};
+  \node[event] (bB0) at (3.4,0) {};
+  % --- trip edges ---
+  \draw[ride] (aA) -- (aX);
+  \draw[ride] (aA2) -- (aX2);
+  \draw[ride] (bY) -- (bB);
+  \draw[ride,track!55] (bY0) -- (bB0);
+  % --- walk edge ---
+  \draw[walkedge] (aX) -- (bY);
+  % time arrow header
+  \node[timelabel] at (3.5,3.95) {time $\rightarrow$};
+
+  % --- annotations (the 4 bullet points, in-figure) ---
+  % 1. stations
+  \node[annot,draw=ink!30,text=ink,fill=ink!6] (n1) at (-2.6,1.5)
+    {Stops normalized to\\station-level IDs};
+  \draw[leader,ink!50] (n1.east) -- (A.west);
+  \draw[leader,ink!50] (n1.east) -- (X.west);
+  \draw[leader,ink!50] (n1.east) -- (Y.west);
+  \draw[leader,ink!50] (n1.east) -- (B.west);
+  % 2. trips
+  \node[annot,draw=track!40,text=track,fill=softblue] (n2) at (0.9,4.4)
+    {\textbf{Trips} = ordered\\stop-time sequences};
+  \draw[leader,track!60] (n2.south east) to[out=-30,in=130] (2.05,2.55);
+  % 3. walk
+  \node[annot,draw=walk!50,text=walk,fill=softorange] (n3) at (5.0,-1.7)
+    {\textbf{Walking edges} between\\stops within radius};
+  \draw[leader,walk!75] (n3.north west) to[out=130,in=-30] (3.18,1.45);
+  % 4. calendar
+  \node[annot,draw=muted!40,text=muted,fill=muted!8] (n4) at (6.8,3.3)
+    {\textbf{Calendar} selects\\which trip runs\\are active};
+  \draw[leader,muted!70] (n4.south west) to[out=-150,in=20] (5.0,2.85);
+  \draw[leader,muted!70] (n4.south west) to[out=-150,in=20] (3.55,1.15);
 \end{tikzpicture}
